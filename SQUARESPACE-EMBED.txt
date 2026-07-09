@@ -1,0 +1,33 @@
+================================================================
+THE SPORTS DESK - SQUARESPACE EMBED
+Paste this ONCE into a single Code Block on the Sports page
+(jasonhorne.org/sports). After that the page updates itself.
+================================================================
+
+SETUP (one time):
+  1. Edit the "Sports" page on jasonhorne.org.
+  2. Add ONE Code Block.
+  3. Copy everything between the lines below into that Code Block.
+  4. Save and publish.
+
+From then on, editing index.html in the sports-shelf repo and
+pushing is all it takes; the iframe always loads the latest
+version and auto-resizes to fit, so there is no inner scrollbar.
+
+---------------- COPY FROM HERE ----------------
+<iframe
+  id="sports-shelf-frame"
+  src="https://jasonbhorne.github.io/sports-shelf/index.html"
+  title="The Sports Desk"
+  style="width:1px;min-width:100%;border:0;display:block;min-height:600px;"
+  scrolling="no"
+  loading="lazy"></iframe>
+<script>
+  window.addEventListener("message", function (e) {
+    if (e.data && e.data.sportsShelf && e.data.height) {
+      document.getElementById("sports-shelf-frame").style.height =
+        e.data.height + "px";
+    }
+  });
+</script>
+---------------- COPY TO HERE ----------------

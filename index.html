@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sports Desk - Jason Horne</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #3d7a52;
+      --accent-dark: #2e6140;
+      --accent-light: #eaf3ed;
+      --text: #1a1a1a;
+      --text-mid: #555;
+      --text-light: #888;
+      --bg: #fafaf8;
+      --card-bg: #ffffff;
+      --border: #e4e4e0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
+
+      --cat-live: #3d7a52;
+      --cat-live-bg: #eaf3ed;
+      --cat-model: #5a6ea5;
+      --cat-model-bg: #eceef8;
+      --cat-skill: #8a6a3a;
+      --cat-skill-bg: #f5f0e8;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .site-header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .site-header .eyebrow {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.75rem;
+    }
+    .site-header h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: normal;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+    .site-header .subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.975rem;
+      color: var(--text-mid);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .header-rule {
+      width: 48px; height: 2px;
+      background: var(--accent);
+      margin: 1.5rem auto 0;
+      border: none;
+    }
+
+    main { max-width: 1080px; margin: 0 auto; padding: 2.5rem 2rem 3.5rem; }
+
+    .group-label {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin: 2.2rem 0 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .group-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+    .group-label:first-child { margin-top: 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 1.5rem 1.35rem;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.18s ease, transform 0.18s ease;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+    .card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 0.9rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .badge {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border-radius: 20px;
+    }
+    .badge-live  { color: var(--cat-live);  background: var(--cat-live-bg); }
+    .badge-model { color: var(--cat-model); background: var(--cat-model-bg); }
+    .badge-skill { color: var(--cat-skill); background: var(--cat-skill-bg); }
+    .card-date { font-size: 0.75rem; color: var(--text-light); }
+
+    .card h2 {
+      font-size: 1.22rem; font-weight: normal;
+      line-height: 1.35; margin-bottom: 0.55rem;
+    }
+    .card p {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.9rem; color: var(--text-mid);
+      line-height: 1.6; margin-bottom: 1.1rem; flex: 1;
+    }
+
+    .card-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .btn {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.83rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.5rem 0.95rem; border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost { background: transparent; color: var(--text-mid); border: 1px solid var(--border); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text-light); }
+
+    footer {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      text-align: center; font-size: 0.8rem; color: var(--text-light);
+      padding: 0 2rem 2.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <p class="eyebrow">jasonhorne.org</p>
+    <h1>The Sports Desk</h1>
+    <p class="subtitle">Where the box score meets the data science: live analytics dashboards,
+      machine learning models, and AI tools for baseball, basketball, and fantasy sports.</p>
+    <hr class="header-rule" />
+  </header>
+
+  <main>
+    <p class="group-label">Live dashboards</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-meta">
+          <span class="badge badge-live">Live dashboard</span>
+          <span class="card-date">Updates daily</span>
+        </div>
+        <h2>ABS Challenge Tracker</h2>
+        <p>MLB's 2026 robo-ump challenge system, tracked all season: which umpires get overturned
+           the most, which teams challenge best, and whether challenge success actually correlates
+           with winning.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="https://www.jasonhorne.org/abs-challenge-tracker">
+            <svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+            Open the tracker</a>
+          <a class="btn btn-ghost" href="https://github.com/jasonbhorne/abs-tracker" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-meta">
+          <span class="badge badge-live">Live dashboard</span>
+          <span class="card-date">Refreshed in season</span>
+        </div>
+        <h2>Braves True-Talent Dashboard</h2>
+        <p>Is it real or is it luck? Every Braves hitter and pitcher graded on expected vs actual
+           production from pitch-level Statcast data, with rolling trends and an auto-flagged
+           watch list for fading bats and dying fastballs.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="https://www.jasonhorne.org/braves-dashboard">
+            <svg viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+            Open the dashboard</a>
+          <a class="btn btn-ghost" href="https://github.com/jasonbhorne/braves-dashboard" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="group-label">Models and tools</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-meta">
+          <span class="badge badge-model">ML model</span>
+          <span class="card-date">March 2026</span>
+        </div>
+        <h2>March Madness Bracket Predictor</h2>
+        <p>A stacked ensemble trained on 18 years of KenPom and Barttorvik data to predict the
+           NCAA tournament, inspired by Jared Cross's first-place Kaggle solution. Full
+           methodology and code.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="https://github.com/jasonbhorne/march-madness-2026" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-meta">
+          <span class="badge badge-skill">Claude Code skill</span>
+          <span class="card-date">Fantasy football</span>
+        </div>
+        <h2>AI Fantasy Football Assistant</h2>
+        <p>An AI assistant that preps drafts, runs live draft support, and analyzes weekly
+           matchups and trades using parallel research agents pulling current data. Built as a
+           reusable Claude Code skill.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="https://github.com/jasonbhorne/claude-code-skills/tree/main/skills/fantasy-football" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub</a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>Dashboards rebuild from MLB Stats API and Baseball Savant data. Built with Claude Code.</footer>
+
+  <script>
+    (function () {
+      function postHeight() {
+        var h = document.documentElement.scrollHeight;
+        window.parent.postMessage({ sportsShelf: true, height: h }, "*");
+      }
+      window.addEventListener("load", postHeight);
+      window.addEventListener("resize", postHeight);
+      if (window.ResizeObserver) {
+        new ResizeObserver(postHeight).observe(document.documentElement);
+      }
+    })();
+  </script>
+</body>
+</html>
